@@ -1,0 +1,68 @@
+@import './base.css';
+
+#app {
+  max-width: 100%;
+  /* margin: -15px; */
+  padding: 0;
+  font-weight: normal;
+  display: flex;
+  place-content: center;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+p {
+  color: white;
+}
+
+h1, h2 {
+  align-self: center;
+  color: white;
+}
+
+a:link, /* Unvisited link */
+a:visited, /* Visited link */
+a:active { /* Selected link */
+  color: white; /* Replace with your desired color (e.g., blue) */
+  /* text-decoration: none; Optional: remove underline */
+}
+
+a:hover {
+  color: #B94E56;
+}
+
+input {
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 8px;
+  min-width: 515px;
+  min-height: 32px;
+  box-shadow: inset;
+}
+
+input:focus-visible {
+  border: 3px !important;
+  border-color: #784259;
+}
+
+button {
+  background: #B94E56;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  cursor: pointer;
+  background: #784259;
+}
+
+
+
