@@ -5,6 +5,12 @@
             src="/movieflix-logo.svg"
         />
         <h1>Log in to your account</h1>
+        <div class="error-container">
+            <ErrorBanner
+                v-if="errorMessage"
+                :message="errorMessage"
+            />
+        </div>
         <form
             @submit.prevent="handleLogin"
         >
@@ -16,6 +22,7 @@
                     v-model="email"
                     type="email"
                     placeholder="Enter email address"
+                    @input="errorMessage = ''"
                     required
                 />
             </div>
@@ -27,14 +34,20 @@
                     v-model="password"
                     type="password"
                     placeholder="Enter password"
+                    @input="errorMessage = ''"
                     required
                 />
             </div>
             <button
                 class="login-button" 
                 type="submit"
+                :disabled="isLoading"
             >
-                Log in
+                <LoadingSpinner 
+                    v-if="isLoading"
+                    class="spinner"
+                />
+                <span v-else>Log in</span>
             </button>
         </form>
         <p>
@@ -51,36 +64,48 @@
 
 <script>
     import axios from 'axios';
-    import { mapActions } from 'pinia';
+    import { useStore } from '@/store/index.js';
+
+    import LoadingSpinner from '../components/LoadingSpinner.vue';
+    import ErrorBanner from '../components/ErrorBanner.vue';
 
     export default {
         name: 'LoginPage',
 
+        components: {
+            LoadingSpinner,
+            ErrorBanner,
+        },
+
         data() {
             return {
+                store: useStore(),
                 email: '',
                 password: '',
+                isLoading: false,
+                errorMessage: '',
             }
         },
 
         methods: {
-            ...mapActions('auth', ['login']),
-
             async handleLogin() {
+                this.isLoading = true;
+                this.errorMessage = '';
                 try {
                     const payload = {
                         username: this.email,
                         email: this.email,
                         password: this.password
                     }
-                    const response = this.login(payload);
-                    if (!response.error) {
-                        localStorage.setItem('access', response.data.access);
-                        this.$router.push('/dashboard');
+                    const response = await this.store.login(payload);
+                    if (response.status === 200) {
+                        console.log('Login successful');
+                        this.$router.push('/home');
                     }
-                } catch (error) {
-                    alert('Login failed');
+                } catch {
+                    this.errorMessage = 'Invalid email or password.';
                 }
+                this.isLoading = false;
             }
         }
     }
@@ -96,6 +121,11 @@
     padding: 20px;
     align-items: center;
     text-align: center;
+
+    .error-container {
+        width: 515px;
+        margin-left: -20px;
+    }
 
     .logo {
         width: 150px;

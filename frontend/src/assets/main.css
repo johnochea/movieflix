@@ -74,5 +74,9 @@ button:hover {
   background: #784259;
 }
 
+button:disabled {
+  background: #784259;
+  cursor: not-allowed;
+}
 
 

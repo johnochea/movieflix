@@ -79,13 +79,14 @@
 
 <script>
     import axios from 'axios';
-    import { mapActions } from 'pinia';
+    import { useStore } from '@/store/index.js';
 
     export default {
         name: 'SignupPage',
 
         data() {
             return {
+                store: useStore(),
                 firstName: '',
                 lastName: '',
                 email: '',
@@ -102,9 +103,8 @@
                         email: this.email,
                         password: this.password,
                     };
-                    await axios.post(`${this.$apiBaseUrl}/register/`, payload);
-                    alert('Account created! Please log in.');
-                    this.$router.push('/login')
+                    console.log(payload)
+                    this.store.register(payload);
                 } catch (error) {
                     console.log(error)
                     alert('Signup failed');

@@ -9,12 +9,12 @@
                     />
                 </template>
                 <template #right>
-                    <p> Welcome, {{ firstName }}!</p>
+                    <h3> Welcome, {{ firstName }}!</h3>
                     <button
                         class="logout-button"
                         @click="handleLogout"
                     >
-                        <i class="mdi mdi-account-circle-outline"/>
+                        <i class="mdi mdi-logout"/>
                         Log out
                     </button>
                 </template>
@@ -30,7 +30,7 @@
                 src="/movieflix-text.svg"
             />
             <p class="landing-text">
-                Discover and enjoy over {{ movieCount }} movies.
+                Discover and enjoy overmovies.
                 <br/>
                 Experience a whole new world of cinema with Movieflix.
             </p>
@@ -49,7 +49,9 @@
 
 <script>
     import axios from 'axios'
-    import { mapActions } from 'pinia';
+    import { useStore } from '@/store/index.js';
+
+    // Component imports
     import Header from '../components/Header.vue'
 
     export default {
@@ -62,12 +64,13 @@
         data() {
             return {
                 user: null,
+                store: useStore(),
             }
         },
 
         computed: {
             firstName() {
-                return this.user?.first_name;
+                return this.user?.first_name || 'Guest';
             },
         },
 
@@ -77,12 +80,10 @@
         },
 
         methods: {
-            ...mapActions('auth', ['logout']),
-
             validateAuth() {
-                const token = localStorage.getItem('access');
+                const token = localStorage.getItem('access_token');
                 if (!token) {
-                    this.$router.push('/login');
+                    // this.$router.push('/login');
                     return;
                 }
             },
@@ -97,13 +98,13 @@
                     user.value = res.data
                 } catch (err) {
                     console.error(err)
-                    router.push('/login')
+                    // router.push('/login')
                 }
             },
 
             handleLogout() {
-                this.logout();
-                this.$router.push('/login');
+                this.store.logout();
+                this.$router.push('/');
             },
         }
     }
