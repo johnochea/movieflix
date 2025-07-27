@@ -50,7 +50,8 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from 'axios';
+    import { mapActions } from 'pinia';
 
     export default {
         name: 'LoginPage',
@@ -63,6 +64,8 @@
         },
 
         methods: {
+            ...mapActions('auth', ['login']),
+
             async handleLogin() {
                 try {
                     const payload = {
@@ -70,13 +73,12 @@
                         email: this.email,
                         password: this.password
                     }
-                    const response = await axios.post('http://localhost:8000/api/token/', payload);
+                    const response = this.login(payload);
                     if (!response.error) {
                         localStorage.setItem('access', response.data.access);
                         this.$router.push('/dashboard');
                     }
                 } catch (error) {
-                    console.log(error)
                     alert('Login failed');
                 }
             }

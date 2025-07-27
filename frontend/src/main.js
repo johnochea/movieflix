@@ -11,4 +11,7 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 
+// Adjust the API base URL during production
+app.config.globalProperties.$apiBaseUrl = 'http://localhost:8000/api';
+
 app.mount('#app')

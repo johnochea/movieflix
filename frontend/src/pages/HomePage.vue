@@ -9,19 +9,17 @@
                     />
                 </template>
                 <template #right>
+                    <p> Welcome, {{ firstName }}!</p>
                     <button
-                        class="login-button"
-                        @click="$router.push('/login')"
+                        class="logout-button"
+                        @click="handleLogout"
                     >
-                        Log in
+                        <i class="mdi mdi-account-circle-outline"/>
+                        Log out
                     </button>
                 </template>
             </Header>
         </div>
-        <img
-            class="background-image"
-            src="/src/assets/backgrounds/landing-page-cover.jpg"
-        />
         <div class="landing-body">
             
             <p class="landing-welcome">
@@ -51,6 +49,7 @@
 
 <script>
     import axios from 'axios'
+    import { mapActions } from 'pinia';
     import Header from '../components/Header.vue'
 
     export default {
@@ -66,12 +65,20 @@
             }
         },
 
+        computed: {
+            firstName() {
+                return this.user?.first_name;
+            },
+        },
+
         mounted() {
             this.validateAuth();
             this.fetchUser();
         },
 
         methods: {
+            ...mapActions('auth', ['logout']),
+
             validateAuth() {
                 const token = localStorage.getItem('access');
                 if (!token) {
@@ -82,17 +89,22 @@
 
             async fetchUser() {
                 try {
-                const res = await axios.get('http://localhost:8000/api/user/', {
-                headers: {
-                    Authorization: `Bearer ${token}`
+                    const res = await axios.get('http://localhost:8000/api/user/', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                    })
+                    user.value = res.data
+                } catch (err) {
+                    console.error(err)
+                    router.push('/login')
                 }
-                })
-                user.value = res.data
-            } catch (err) {
-                console.error(err)
-                router.push('/login') // Token may be invalid/expired
-            }
-            }
+            },
+
+            handleLogout() {
+                this.logout();
+                this.$router.push('/login');
+            },
         }
     }
 </script>
@@ -109,12 +121,13 @@
             width: 100%;
 
             .logo {
-                height: 80px;
+                height: 70px;
             }
 
-            .login-button {
-                width: 80px;
+            .logout-button {
+                width: fit-content;
                 height: 40px;
+                font-size: 14px;
             }
         }
 
@@ -152,7 +165,7 @@
 
             .signup-button {
                 width: 120px;
-                height: 48px;
+                height: 40px;
                 margin-bottom: 164px;
             }
         }

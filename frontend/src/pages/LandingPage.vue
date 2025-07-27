@@ -7,15 +7,14 @@
                         class="logo"
                         src="/movieflix-logo.svg"
                     />
-                    <router-link
-                        to="/login"
-                    >
+                    <router-link to="/">
                         FAQs
                     </router-link>
-                    <router-link
-                        to="/login"
-                    >
+                    <router-link to="/">
                         About
+                    </router-link>
+                    <router-link to="/">
+                        Contact us
                     </router-link>
                 </template>
                 <template #right>
@@ -24,6 +23,7 @@
                         class="login-button"
                         @click="navigate('/login')"
                     >
+                        <i class="mdi mdi-account-circle-outline"/>
                         Log in
                     </button>
                     <button
@@ -31,6 +31,7 @@
                         class="login-button"
                         @click="navigate('/home')"
                     >
+                        <i class="mdi mdi-home-outline"/>
                         Go to home
                     </button>
                 </template>
@@ -62,6 +63,7 @@
                 class="signup-button"
                 @click="navigate('/signup')"
             >
+                <i class="mdi mdi-account-box-outline"/>
                 Sign up now
             </button>
             <button
@@ -69,7 +71,8 @@
                 class="signup-button"
                 @click="navigate('/movies')"
             >
-                View movies
+                <i class="mdi mdi-compass-outline"/>
+                Explore movies
             </button>
         </div>
     </div>
@@ -140,12 +143,13 @@
             width: 100%;
 
             .logo {
-                height: 80px;
+                height: 70px;
             }
 
             .login-button {
                 width: fit-content;
                 height: 40px;
+                font-size: 14px;
             }
         }
 
@@ -182,9 +186,10 @@
             }
 
             .signup-button {
-                width: 120px;
+                width: fit-content;
                 height: 48px;
                 margin-bottom: 164px;
+                font-size: 14px;
             }
         }
     }

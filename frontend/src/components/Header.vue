@@ -32,11 +32,14 @@
         flex: 1;
         display: flex;
         justify-content: flex-start;
+        align-items: center;
+        gap: 20px;
     }
 
     .right-slot {
         flex: 1;
         display: flex;
         justify-content: flex-end;
+        gap: 20px;
     }
 </style>

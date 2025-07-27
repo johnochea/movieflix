@@ -78,7 +78,8 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    import axios from 'axios';
+    import { mapActions } from 'pinia';
 
     export default {
         name: 'SignupPage',
@@ -101,7 +102,7 @@
                         email: this.email,
                         password: this.password,
                     };
-                    await axios.post('http://localhost:8000/api/register/', payload);
+                    await axios.post(`${this.$apiBaseUrl}/register/`, payload);
                     alert('Account created! Please log in.');
                     this.$router.push('/login')
                 } catch (error) {

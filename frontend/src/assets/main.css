@@ -26,6 +26,11 @@ h1, h2 {
   color: white;
 }
 
+i {
+  font-size: 24px;
+  align-self: center;
+}
+
 a:link, /* Unvisited link */
 a:visited, /* Visited link */
 a:active { /* Selected link */
@@ -57,6 +62,11 @@ button {
   color: white;
   border: none;
   border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  display: flex;
+  gap: 5px;
 }
 
 button:hover {
