@@ -1,6 +1,4 @@
-from django.contrib.auth.models import (
-    AbstractBaseUser, BaseUserManager, PermissionsMixin
-)
+from django.contrib.auth.models import BaseUserManager
 from django.db import models
 from django.utils import timezone
 import os
@@ -18,46 +16,16 @@ class UserManager(BaseUserManager):
         return user
 
 
-class UserProfile(AbstractBaseUser, PermissionsMixin):
-    '''
-        This model represents the user profile.
-
-        Fields:
-        - email (email):        The user's email address
-        - first_name (str):     The user's first name
-        - last_name (str):      The user's last name
-        - is_active (bool):     Indicates if the account is active
-        - is_staff (bool):      Indicates if the user has admin privileges
-    '''
-
-    user = models.OneToOneField(
-        'auth.User', on_delete=models.CASCADE, null=True, blank=True
-    )
-    email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-
-    objects = UserManager()
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
-
-    def __str__(self):
-        return self.first_name + ' ' + self.last_name
+def video_upload_path(instance, file_name):
+    extension = file_name.split('.')[-1]
+    file_name = f"{uuid4().hex}.{extension}"
+    return os.path.join('videos/', file_name)
 
 
-def video_upload_path(instance, filename):
-    ext = filename.split('.')[-1]
-    filename = f"{uuid4().hex}.{ext}"
-    return os.path.join('videos/', filename)
-
-
-def thumbnail_upload_path(instance, filename):
-    ext = filename.split('.')[-1]
-    filename = f"{uuid4().hex}.{ext}"
-    return os.path.join('thumbnails/', filename)
+def thumbnail_upload_path(instance, file_name):
+    extension = file_name.split('.')[-1]
+    file_name = f"{uuid4().hex}.{extension}"
+    return os.path.join('thumbnails/', file_name)
 
 
 class Movie(models.Model):
