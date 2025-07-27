@@ -21,11 +21,9 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        align-items: center;
         background-color: #383852;
         padding: 20px 30px;
         height: 48px;
-        /* width: 100%; */
     }
 
     .left-slot {
@@ -40,6 +38,7 @@
         flex: 1;
         display: flex;
         justify-content: flex-end;
+        align-items: center;
         gap: 20px;
     }
 </style>
