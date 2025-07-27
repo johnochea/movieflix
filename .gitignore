@@ -1,0 +1,43 @@
+# === Global ===
+*.log
+*.pot
+*.pyc
+__pycache__/
+env/
+venv/
+.env
+.DS_Store
+*.sqlite3
+
+# === Django ===
+
+# Include db for now to populate initial data
+# db.sqlite3
+/media/
+staticfiles/
+*.py[cod]
+*.sqlite3
+*.db
+*.swp
+/secrets.json
+celerybeat-schedule
+coverage.xml
+htmlcov/
+instance/
+local_settings.py
+
+# === Vue ===
+node_modules/
+dist/
+*.local
+.env.local
+.env.*.local
+
+# === VSCode and IDEs ===
+.vscode/
+.idea/
+
+# === OS and Editor Artifacts ===
+*.bak
+*.swp
+*.tmp
