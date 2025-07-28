@@ -37,11 +37,20 @@ Run the server afterwards:
 ### INSTRUCTIONS
 - Navigate to local
 - Create an account
+- Log in
+- Upload a movie
+- Click on the movie
+- Watch the movie, edit, or delete
 
 ### MISSING FEATURES
 Some features are missing, such as the following:
 - title and description length validations
 - file type and size validations
 - specifying who can upload/edit videos and who can watch only
-- displays
-- sorters 
+- missing success displays
+- sorters
+- editing can only edit if a new video is uploaded
+- No breadcrumbs or navigation on header
+
+### VIDEO DEMO:
+https://drive.google.com/file/d/1TrgAOOWOPVd-9wfYtnKZd343lbENp1QG/view?usp=sharing
