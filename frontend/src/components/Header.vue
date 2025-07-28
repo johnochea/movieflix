@@ -18,12 +18,12 @@
 <style scoped>
     .header {
         display: flex;
-        flex-direction: row;
         align-items: center;
         justify-content: space-between;
         background-color: #383852;
         padding: 20px 30px;
         height: 48px;
+        position: sticky;
     }
 
     .left-slot {

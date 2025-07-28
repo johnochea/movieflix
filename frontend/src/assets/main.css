@@ -2,7 +2,6 @@
 
 #app {
   max-width: 100%;
-  /* margin: -15px; */
   padding: 0;
   font-weight: normal;
   display: flex;
@@ -21,7 +20,7 @@ p {
   color: white;
 }
 
-h1, h2 {
+h1, h2, h3 {
   align-self: center;
   color: white;
 }
@@ -31,25 +30,25 @@ i {
   align-self: center;
 }
 
-a:link, /* Unvisited link */
-a:visited, /* Visited link */
-a:active { /* Selected link */
-  color: white; /* Replace with your desired color (e.g., blue) */
-  /* text-decoration: none; Optional: remove underline */
+a:link,
+a:visited,
+a:active {
+  color: white;
 }
 
 a:hover {
   color: #B94E56;
 }
 
-input {
+input, textarea {
   border-radius: 5px;
   border: none;
   outline: none;
   padding: 8px;
-  min-width: 515px;
-  min-height: 32px;
+  width: 515px;
+  height: 32px;
   box-shadow: inset;
+  font: 14px 'Arial', sans-serif;
 }
 
 input:focus-visible {

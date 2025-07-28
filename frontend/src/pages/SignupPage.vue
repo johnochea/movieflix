@@ -5,6 +5,12 @@
             src="/movieflix-logo.svg"
         />
         <h1>Create your account</h1>
+        <div class="error-container">
+            <ErrorBanner
+                v-if="errorMessage"
+                :message="errorMessage"
+            />
+        </div>
         <form
             @submit.prevent="handleSignup"
         >
@@ -14,7 +20,7 @@
                         First Name
                     </p>
                     <input
-                        v-model="firstName"
+                        v-model="accountDetails.firstName"
                         class="name-input"
                         type="text"
                         placeholder="Enter first name"
@@ -26,7 +32,7 @@
                         Last Name
                     </p>
                     <input
-                        v-model="lastName"
+                        v-model="accountDetails.lastName"
                         class="name-input"
                         type="text"
                         placeholder="Enter last name"
@@ -39,7 +45,7 @@
                     Email address
                 </p>
                 <input
-                    v-model="email"
+                    v-model="accountDetails.email"
                     type="email"
                     placeholder="Enter email address"
                     required
@@ -50,7 +56,7 @@
                     Password
                 </p>
                 <input
-                    v-model="password"
+                    v-model="accountDetails.password"
                     type="password"
                     placeholder="Enter password"
                     required
@@ -60,8 +66,13 @@
                 <button
                     class="signup-button" 
                     type="submit"
+                    :disabled="isLoading"
                 >
-                    Sign Up
+                    <LoadingSpinner 
+                        v-if="isLoading"
+                        class="spinner"
+                    />
+                    <span v-else>Sign up</span>
                 </button>
             </div>
         </form>
@@ -81,34 +92,51 @@
     import axios from 'axios';
     import { useStore } from '@/store/index.js';
 
+    import LoadingSpinner from '../components/LoadingSpinner.vue';
+    import ErrorBanner from '../components/ErrorBanner.vue';
+
     export default {
         name: 'SignupPage',
+
+        components: {
+            LoadingSpinner,
+            ErrorBanner,
+        },
 
         data() {
             return {
                 store: useStore(),
-                firstName: '',
-                lastName: '',
-                email: '',
-                password: '',
+                accountDetails: {
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    password: '',
+                },
+                isLoading: false,
+                errorMessage: '',
             }
         },
 
         methods: {
             async handleSignup() {
+                this.isLoading = true;
                 try {
                     const payload = {
-                        first_name: this.firstName,
-                        last_name: this.lastName,
-                        email: this.email,
-                        password: this.password,
+                        first_name: this.accountDetails.firstName,
+                        last_name: this.accountDetails.lastName,
+                        email: this.accountDetails.email,
+                        password: this.accountDetails.password,
                     };
-                    console.log(payload)
-                    this.store.register(payload);
+                    const response = await this.store.register(payload);
+                    if (response.error) {
+                        this.errorMessage = 'Email address already registered. Try logging in instead.';
+                    } else {
+                        this.$router.push('/login');
+                    }
                 } catch (error) {
-                    console.log(error)
-                    alert('Signup failed');
+                    console.error('Error during signup:', error);
                 }
+                this.isLoading = false;
             }
         }
     }
@@ -125,6 +153,11 @@
     align-items: center;
     text-align: center;
 
+    .error-container {
+        width: 515px;
+        margin-left: -20px;
+    }
+
     .logo {
         width: 150px;
         margin-bottom: -5px;
@@ -136,7 +169,7 @@
         margin-bottom: -5px;
 
         .name-input {
-            min-width: 240px;
+            width: 240px;
         }
     }
 

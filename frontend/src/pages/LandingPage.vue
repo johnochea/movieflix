@@ -95,34 +95,17 @@
             }
         },
 
-        mounted() {
+        created() {
             this.validateAuth();
         },
 
         methods: {
-            async handleSignup() {
-                try {
-                    const payload = {
-                        first_name: this.firstName,
-                        last_name: this.lastName,
-                        email: this.email,
-                        password: this.password,
-                    };
-                    await axios.post('http://localhost:8000/api/register/', payload);
-                    alert('Account created! Please log in.');
-                    this.$router.push('/login')
-                } catch (error) {
-                    console.log(error)
-                    alert('Signup failed');
-                }
-            },
-
             navigate(path) {
                 this.$router.push(path);
             },
 
             validateAuth() {
-                const token = localStorage.getItem('access');
+                const token = localStorage.getItem('access_token');
                 if (token) {
                     this.isLoggedIn = true;
                 }

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import API from '@/axios'
 
 export const useStore = defineStore('auth', {
   state: () => ({
@@ -11,8 +12,6 @@ export const useStore = defineStore('auth', {
   actions: {
     // Creates a new user account
     async register({ first_name, last_name, email, password }) {
-      console.log("registering user")
-      console.log(first_name)
       try {
         const response = await axios.post(`${this.apiBaseUrl}/register/`, 
           {
@@ -22,16 +21,7 @@ export const useStore = defineStore('auth', {
             password
           }
         );
-        if (response.status === 201) {
-          const userAccount = {
-            email: response.data.email,
-            username: response.data.username,
-            password: password
-          };
-
-          const loginResponse = await this.login(userAccount);
-          return loginResponse
-        }
+        return response;
       } catch (error) {
         console.error("Error registering user:", error);
         throw error;
@@ -40,12 +30,12 @@ export const useStore = defineStore('auth', {
 
     // Logs in the user and fetches user data
     async login(payload) {
-      console.log("logging in")
       const response = await axios.post(`${this.apiBaseUrl}/token/`, payload);
 
       if (response.status === 200) {
         this.access_token = response.data.access;
         localStorage.setItem('access_token', response.data.access);
+        localStorage.setItem('refresh_token', response.data.refresh);
       }
 
       return response;
@@ -53,23 +43,20 @@ export const useStore = defineStore('auth', {
     
     // Logs out the current user
     logout() {
-      console.log("logging out")
       this.access_token = null;
       this.user = null;
       localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
     },
 
     // Fetches the user data
     async getUser() {
-      console.log("getting user")
       try {
-        const res = await axios.get(`${this.apiBaseUrl}/user/`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`
-          }
-        })
-        console.log("user data:", res.data)
-        this.user = res.data;
+        const response = await API.get('user/');
+
+        if (response.status === 200 && response.data) {
+          this.user = response.data;
+        }
       } catch (err) {
         console.error('Failed to fetch user:', err)
         this.user = null;

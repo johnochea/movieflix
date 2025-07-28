@@ -19,10 +19,10 @@
                     Email address
                 </p>
                 <input
-                    v-model="email"
+                    v-model="accountDetails.email"
                     type="email"
                     placeholder="Enter email address"
-                    @input="errorMessage = ''"
+                    @focus="errorMessage = ''"
                     required
                 />
             </div>
@@ -31,10 +31,10 @@
                     Password
                 </p>
                 <input
-                    v-model="password"
+                    v-model="accountDetails.password"
                     type="password"
                     placeholder="Enter password"
-                    @input="errorMessage = ''"
+                    @focus="errorMessage = ''"
                     required
                 />
             </div>
@@ -80,8 +80,10 @@
         data() {
             return {
                 store: useStore(),
-                email: '',
-                password: '',
+                accountDetails: {
+                    email: '',
+                    password: '',
+                },
                 isLoading: false,
                 errorMessage: '',
             }
@@ -93,13 +95,12 @@
                 this.errorMessage = '';
                 try {
                     const payload = {
-                        username: this.email,
-                        email: this.email,
-                        password: this.password
+                        username: this.accountDetails.email,
+                        email: this.accountDetails.email,
+                        password: this.accountDetails.password,
                     }
                     const response = await this.store.login(payload);
                     if (response.status === 200) {
-                        console.log('Login successful');
                         this.$router.push('/home');
                     }
                 } catch {
