@@ -53,4 +53,4 @@ Some features are missing, such as the following:
 - No breadcrumbs or navigation on header
 
 ### VIDEO DEMO:
-https://drive.google.com/file/d/1TrgAOOWOPVd-9wfYtnKZd343lbENp1QG/view?usp=sharing
+https://drive.google.com/file/d/1blDv9ekIwEwJHe3xeIZQyDbvP3Y0lQGF/view?usp=sharing
