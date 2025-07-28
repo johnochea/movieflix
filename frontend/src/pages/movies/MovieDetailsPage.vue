@@ -32,10 +32,12 @@
 
       <div class="actions">
         <button @click="showUploadModal = true">
-          <i class="mdi mdi-pencil" /> Edit
+          <i class="mdi mdi-pencil" />
+            Edit
         </button>
         <button @click="deleteMovie">
-          <i class="mdi mdi-delete" /> Delete
+          <i class="mdi mdi-delete" />
+            Delete
         </button>
       </div>
     </div>
@@ -46,7 +48,7 @@
       :is-edit="true"
       :movie-data="movie"
       @close="showUploadModal = false"
-      @updated="fetchMovie"
+      @refresh="fetchMovie"
     />
   </div>
 </template>

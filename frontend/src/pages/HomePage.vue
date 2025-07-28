@@ -69,6 +69,7 @@
             :visible="showUploadModal"
             :is-edit="false"
             @close="showUploadModal = false"
+            @refresh="updateMovies"
         />
     </div>
 </template>
@@ -165,6 +166,13 @@
                 } finally {
                     this.isFetching = false;
                 }
+            },
+
+            async updateMovies() {
+                this.isFetching = true;
+                await this.fetchAllMovies(); 
+                await this.fetchNewlyAddedMovies();
+                this.isFetching = false;
             },
 
             handleLogout() {
