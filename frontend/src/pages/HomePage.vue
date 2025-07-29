@@ -46,12 +46,13 @@
             <div class="movie-container">
                 <div class="label">
                     <h1>All movies</h1>
+                    
+                    <!-- TODO: Search bar currently has no functionality -->
                     <div class="search">
                         <i class="mdi mdi-magnify"/>
                         <input
                             type="text"
                             placeholder="Search movie"
-                            @input="store.searchMovies($event.target.value)"
                         />
                     </div>
                 </div>
