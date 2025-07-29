@@ -158,7 +158,6 @@
                     const next = response.data.next;
 
                     this.allMovies.push(...results);
-                    console.log(this.allMovies)
                     this.currentPage++;
                     this.hasNextPage = !!next;
                 } catch (error) {
@@ -170,6 +169,7 @@
 
             async updateMovies() {
                 this.isFetching = true;
+                this.hasNextPage = true;
                 await this.fetchAllMovies(); 
                 await this.fetchNewlyAddedMovies();
                 this.isFetching = false;
